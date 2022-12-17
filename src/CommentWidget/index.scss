@@ -1,0 +1,202 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box,
+}
+
+$white-color: white;
+$black-color: black;
+$b-color: #bbb;
+$c-color: #ccc;
+$red-color: red;
+$blue-color: blue;
+
+// icon link
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
+
+//font
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;1,100;1,300;1,900&family=Solway:wght@400;700&display=swap');
+
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+}
+
+.banner {
+    width: 97%;
+    height: 100%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.comment-session {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin: auto;
+    gap: 10px;
+    margin-top: 50px;
+    align-items: center;
+
+
+    &-profile {
+        width: 3%;
+        height: 3%;
+    }
+
+    &-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    &-input-session {
+        width: 100%;
+    }
+
+    &-input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid $b-color;
+        border-radius: 0;
+        font-size: 20px;
+    }
+}
+
+::placeholder {
+    font-size: 18px;
+}
+
+.comment-session-input:focus {
+    border-color: $white-color;
+    outline: none;
+    border-bottom: 2px solid;
+}
+
+.comment-session-button {
+    width: 99%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment-button {
+    width: 115px;
+    height: 38px;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50px;
+    color: $b-color;
+    border: 1px solid $b-color;
+}
+
+.comment-button:hover {
+    background-color: $blue-color;
+    color: $white-color;
+    border: none;
+}
+
+.comment-container {
+    width: 97%;
+    margin: auto;
+
+    &-items {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    &-header {
+        width: 100%;
+        display: flex;
+        gap: 7px;
+    }
+
+    &-user-name {
+        font-size: 16px;
+    }
+
+    &-profile {
+        width: 3%;
+        height: 3%;
+
+    }
+
+    &-profile-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+
+    &-user {
+        width: 95%;
+        font-size: 11px;
+        display: flex;
+        text-align: left;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &-comment {
+        color: $black-color;
+        font-size: 18px;
+        width: 90%;
+        font-weight: 600;
+    }
+
+    &-replay-profile {
+        width: 100%;
+    }
+
+    &-replay {
+        color: $black-color;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    &-replay-session {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+    }
+}
+
+.replay-container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.nested-replay-container{
+    width: 92%;
+
+    &-items{
+        width: 100%;
+        padding:15px;
+        line-height:2;
+    }
+
+    &-button-items{
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    &-button{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    &-heading{
+        font-size: 17px;
+    }
+}
