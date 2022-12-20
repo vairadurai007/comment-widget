@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box,
+
 }
 
 $white-color: white;
@@ -17,10 +18,13 @@ $blue-color: blue;
 //font
 @import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;1,100;1,300;1,900&family=Solway:wght@400;700&display=swap');
 
+// @import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;0,300;1,100;1,300;1,900&family=Solway:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Mukta:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;0,300;1,100;1,900&family=Solway:wght@400;700&display=swap');
 .container {
     width: 100%;
     margin: auto;
     padding: 20px;
+    font-family: 'Roboto', sans-serif;
 }
 
 .banner {
@@ -38,7 +42,6 @@ $blue-color: blue;
     gap: 10px;
     margin-top: 50px;
     align-items: center;
-
 
     &-profile {
         width: 3%;
@@ -114,6 +117,12 @@ $blue-color: blue;
         letter-spacing: 1px;
     }
 
+    &-service {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+    }
+
     &-header {
         width: 100%;
         display: flex;
@@ -164,8 +173,6 @@ $blue-color: blue;
 
     &-replay-session {
         width: 100%;
-        display: flex;
-        gap: 20px;
     }
 }
 
@@ -175,28 +182,28 @@ $blue-color: blue;
     gap: 10px;
 }
 
-.nested-replay-container{
+.nested-replay-container {
     width: 92%;
 
-    &-items{
+    &-items {
         width: 100%;
-        padding:15px;
-        line-height:2;
+        padding: 15px;
+        line-height: 2;
     }
 
-    &-button-items{
+    &-button-items {
         border: none;
         background: transparent;
         cursor: pointer;
     }
 
-    &-button{
+    &-button {
         display: flex;
         flex-direction: row;
         gap: 20px;
     }
 
-    &-heading{
+    &-heading {
         font-size: 17px;
     }
 }

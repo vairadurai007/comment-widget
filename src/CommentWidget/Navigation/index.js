@@ -24,7 +24,7 @@ export default function Navigation() {
                         placeholder="Search..."
                     />
                     <div className="navigation-search-icon">
-                        <p className="navigation-button">Search</p>
+                        <p className="navigation-button"></p>
                     </div>
                 </div>
                 <div className="navigation-search-box-voice-icon">

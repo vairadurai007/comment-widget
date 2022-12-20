@@ -10,15 +10,15 @@ export default function CommentWidget() {
     const [commentSession, setCommentSession] = useState([])
     const [isreply, setIsReply] = useState(false)
     const [ischeck, setIsCheck] = useState(false)
-    const [isNestedReply, setNestedReply] = useState(false)
+    const [isNestedReply, setIsNestedReply] = useState(false)
     const [isEdit, setIsEdit] = useState(true)
     const [editCommentIndex, setEditCommentIndex] = useState(0)
     const [userId, setUserId] = useState('');
     const [commentIndex, setCommentIndex] = useState(0)
     const [replyCommentUserId, setReplyCommentUserId] = useState('')
     const [nestedReplyIndex, setNestedReplyIndex] = useState(0)
-    const [nestedDeleteIndex, setNestedDeleteIndex] = useState(0)
-    const [index, setIndex] = useState(0)
+    const [NestedEditCommentIndex, setNestedEditCommentIndex] = useState(0)
+    const [isNestedEdit, setIsNestedEdit] = useState(true)
     const [comment, setComment] = useState(
         {
             userComment: '',
@@ -46,7 +46,7 @@ export default function CommentWidget() {
         if (!!reply.replyComment) {
             const replyId = uuid().slice(0, 4)
             reply.replyUserId = replyId;
-            commentSession[commentIndex].reply = [...commentSession[commentIndex].reply, { reply }]
+            commentSession[commentIndex].reply = [...commentSession[commentIndex].reply, reply]
             setIsCheck(true)
             setIsReply(false)
         }
@@ -70,6 +70,11 @@ export default function CommentWidget() {
         )
     }
 
+    const handleCancelComment = () => {
+        setIsEdit(true)
+        setComment({ ...comment, userComment: '', userId: '' })
+    }
+
     const updateReply = (userId, index) => {
         setUserId(userId)
         setIsReply(true)
@@ -78,15 +83,18 @@ export default function CommentWidget() {
 
     const handleCancel = () => {
         setIsReply(false)
+
     }
 
-    const updateNestedReply = (event, index) => {
-        setReplyCommentUserId(event.reply.replyUserId)
-        setNestedReply(true)
+    const updateNestedReply = (replyComment) => {
+        setReplyCommentUserId(replyComment.replyUserId)
+        setIsNestedReply(true)
     }
 
     const handleNestedCancel = () => {
-        setNestedReply(false)
+        setReply({ ...reply, replyComment: '' })
+        setIsNestedReply(false)
+        setIsNestedEdit(true)
     }
 
     const onChangeNestedReplyHandler = (event) => {
@@ -95,19 +103,19 @@ export default function CommentWidget() {
         )
     }
 
-    const handleUpdateNestedReply = (event) => {
+    const handleUpdateNestedReply = (commentIndex) => {
+
         const nestedUserIdId = uuid().slice(0, 4);
         reply.replyUserId = nestedUserIdId;
-        event.preventDefault()
-        if (reply.replyComment && reply.replyUserId) {
-            commentSession[commentIndex].reply.push({ reply })
-            console.log('hi');
-            setNestedReply(false)
+
+        if (reply.replyComment) {
+            commentSession[commentIndex].reply.push(reply)
+            setIsNestedReply(false)
         }
         setReply({ ...reply, replyComment: '', replyUserId: '' })
     }
 
-    const HandleEditReply = (commentValue, userComment, userId, index) => {
+    const handleEditReply = (commentValue, userComment, userId, index) => {
 
         comment.userComment = userComment
         comment.userId = userId
@@ -122,36 +130,42 @@ export default function CommentWidget() {
         setComment({ ...comment, userComment: '' })
     }
 
-    const HandleDeleteReply = (deleteIndex) => {
-        const deletedComments = commentSession.filter((comments, index) => {
+    const handleDeleteReply = (deleteIndex) => {
+        const deletedComments = commentSession.filter((_, index) => {
             return (index !== deleteIndex)
         })
-
-        setCommentSession(deletedComments)
+        setCommentSession([...deletedComments])
     }
 
-    const HandleNestedEditReply = (comment, commentIndex, index) => {
-        console.log(comment, commentIndex, index);
-        setNestedReplyIndex(index)
+    const handleNestedEditReply = (replyComment, replyUserId, commentIndex, replyIndex) => {
+
+        reply.replyComment = replyComment
+        reply.replyUserId = replyUserId
+        setIsNestedReply(true)
+        setNestedReplyIndex(replyIndex)
+        setReplyCommentUserId(replyUserId)
+        setCommentIndex()
+        setIsNestedEdit(false)
+        setNestedEditCommentIndex(commentIndex)
     }
 
-    const HandleNestedDeleteReply = (commentIndex, index) => {
-        
-        const nestedDeleteComment = commentSession[commentIndex].reply.filter((comments, deleteIndex) => {
-            return (
-                deleteIndex !== index
-            )
-        })
-        console.log(nestedDeleteComment);
-        setCommentSession(commentSession[commentIndex].reply = nestedDeleteComment)
+    const handleNestedDeleteReply = (commentIndex, replyIndex) => {
+        commentSession[commentIndex].reply.splice(replyIndex, 1)
+        setCommentSession([...commentSession])
+    }
 
+    const handleUpdateEditNestedReply = () => {
+        commentSession[NestedEditCommentIndex].reply[nestedReplyIndex] = reply
+        setIsNestedEdit(true)
+        setIsNestedReply(false)
+        setReply({ ...reply, replyComment: '' })
     }
 
     return (
         <div className="container">
             <Navigation />
             <div className="banner">
-                <BannerItems />
+                {/* <BannerItems /> */}
                 <div className="comment-session">
                     <div className="comment-session-profile">
                         <img className="comment-session-image" src={image} alt='loading' />
@@ -169,25 +183,30 @@ export default function CommentWidget() {
             </div>
 
             <div className="comment-session-button">
-                {isEdit ? <button
-                    onClick={handleUpdateComment}
-                    className="comment-button">
-                    Comment
-                </button> :
+                {isEdit ?
+                    <button
+                        onClick={handleUpdateComment}
+                        className="comment-button">
+                        Comment
+                    </button> :
                     <button
                         onClick={handleEditComment}
                         className="comment-button">
                         update
                     </button>
                 }
+                <button className="comment-button"
+                    onClick={handleCancelComment}>
+                    cancel
+                </button>
             </div>
 
             <div className='comment-container'>
                 {
-                    commentSession.map((comment, commentindex) => {
+                    commentSession.map((comment, commentIndex) => {
 
                         return (
-                            <div key={commentindex} className='comment-container-items'>
+                            <div key={commentIndex} className='comment-container-items'>
                                 <div className="comment-container-header">
                                     <div className="comment-container-profile">
                                         <img
@@ -196,29 +215,34 @@ export default function CommentWidget() {
                                         />
                                     </div>
                                     <div className='comment-container-user'>
-                                        <h2 className="comment-container-user-name">@{comment.userId}</h2>
-                                        <p className='comment-container-comment'>{comment.userComment}</p>
+                                        <h2 className="comment-container-user-name">
+                                            @{comment.userId}
+                                        </h2>
+                                        <p className='comment-container-comment'>
+                                            {comment.userComment}
+                                        </p>
 
                                         <div className="comment-container-replay-session">
-                                            <p className='comment-container-replay'
-                                                onClick={() => updateReply(comment.userId, commentindex, comment.reply)}>
-                                                Reply
-                                            </p>
-                                            <p className='comment-container-replay'
-                                                onClick={() => HandleEditReply(comment, comment.userComment, comment.userId, commentindex)}
-                                            >
-                                                Editt
-                                            </p>
-                                            <p className='comment-container-replay'
-                                                onClick={() => HandleDeleteReply(commentindex)}
-                                            >
-                                                Delete
-                                            </p>
+                                            <div className="comment-container-service">
+                                                <p className='comment-container-replay'
+                                                    onClick={() => updateReply(comment.userId, commentIndex, comment.reply)}>
+                                                    Reply
+                                                </p>
+                                                <p className='comment-container-replay'
+                                                    onClick={() => handleEditReply(comment, comment.userComment, comment.userId, commentIndex)}
+                                                >
+                                                    Edit
+                                                </p>
+                                                <p className='comment-container-replay'
+                                                    onClick={() => handleDeleteReply(commentIndex)}
+                                                >
+                                                    Delete
+                                                </p>
+                                            </div>
                                         </div>
                                         {
                                             (isreply && comment.userId === userId) ?
-
-                                                <div key={commentindex}>
+                                                <div key={commentIndex}>
                                                     <div className="replay-container">
                                                         <div className="comment-container-profile">
                                                             <img
@@ -237,6 +261,7 @@ export default function CommentWidget() {
                                                         </div>
                                                     </div>
                                                     <div className="comment-session-button">
+
                                                         <button
                                                             onClick={handleUpdateReply}
                                                             className="comment-button">
@@ -259,29 +284,31 @@ export default function CommentWidget() {
                                                         <div
                                                             key={index}
                                                             className="nested-replay-container-items">
+
                                                             <h3
                                                                 className="nested-replay-container-heading">
-                                                                @{replyComment.reply.replyUserId} <br></br>
-                                                                {replyComment.reply.replyComment}
+                                                                @{replyComment.replyUserId} <br></br>
+                                                                {replyComment.replyComment}
                                                             </h3>
                                                             <div className="comment-container-replay-session">
-                                                                <p className='comment-container-replay'
-                                                                    onClick={() => updateNestedReply(replyComment, index)}>
-                                                                    Reply
-                                                                </p>
-                                                                <p className='comment-container-replay'
-                                                                    onClick={() => HandleNestedEditReply(comment, commentindex, index)}
-                                                                >
-                                                                    Editt
-                                                                </p>
-                                                                <p className='comment-container-replay'
-                                                                    onClick={() => HandleNestedDeleteReply(commentindex, index)}
-                                                                >
-                                                                    Delete
-                                                                </p>
-
+                                                                <div className="comment-container-service">
+                                                                    <p className='comment-container-replay'
+                                                                        onClick={() => updateNestedReply(replyComment)}>
+                                                                        Reply
+                                                                    </p>
+                                                                    <p className='comment-container-replay'
+                                                                        onClick={() => handleNestedEditReply(replyComment.replyComment, replyComment.replyUserId, commentIndex, index)}
+                                                                    >
+                                                                        Edit
+                                                                    </p>
+                                                                    <p className='comment-container-replay'
+                                                                        onClick={() => handleNestedDeleteReply(commentIndex, index)}
+                                                                    >
+                                                                        Delete
+                                                                    </p>
+                                                                </div>
                                                                 {
-                                                                    isNestedReply && replyCommentUserId === replyComment.reply.replyUserId ?
+                                                                    isNestedReply && replyCommentUserId === replyComment.replyUserId ?
                                                                         <div key={index}>
                                                                             <div className="replay-container">
                                                                                 <div className="comment-container-profile">
@@ -294,18 +321,26 @@ export default function CommentWidget() {
                                                                                     <input className="comment-session-input"
                                                                                         type='text'
                                                                                         name="replyComment"
-                                                                                        placeholder="Add a replay"
+                                                                                        placeholder="Add a reply"
                                                                                         onChange={onChangeNestedReplyHandler}
                                                                                         value={reply.replyComment}
                                                                                     />
                                                                                 </div>
                                                                             </div>
                                                                             <div className="comment-session-button">
-                                                                                <button
-                                                                                    onClick={handleUpdateNestedReply}
-                                                                                    className="comment-button">
-                                                                                    reply
-                                                                                </button>
+                                                                                {isNestedEdit ?
+                                                                                    <button
+                                                                                        onClick={() => handleUpdateNestedReply(commentIndex)}
+                                                                                        className="comment-button">
+                                                                                        reply
+                                                                                    </button>
+                                                                                    :
+                                                                                    <button
+                                                                                        onClick={handleUpdateEditNestedReply}
+                                                                                        className="comment-button">
+                                                                                        update
+                                                                                    </button>
+                                                                                }
                                                                                 <button className="comment-button"
                                                                                     onClick={handleNestedCancel}>
                                                                                     cancel
