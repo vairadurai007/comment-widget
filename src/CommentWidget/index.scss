@@ -2,7 +2,6 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box,
-
 }
 
 $white-color: white;
@@ -16,15 +15,13 @@ $blue-color: blue;
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
 
 //font
-@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;1,100;1,300;1,900&family=Solway:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=IBM+Plex+Serif:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Mukta:wght@200;300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;0,300;1,100;1,900&family=Solway:wght@400;700&display=swap');
 
-// @import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;0,300;1,100;1,300;1,900&family=Solway:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@400;500&family=Cormorant+Garamond:wght@300&family=Lato:ital@1&family=Lexend:wght@300&family=Mukta:wght@300&family=Open+Sans:ital,wght@0,500;1,800&family=Roboto+Serif:ital,wght@1,200&family=Roboto:ital,wght@0,100;0,300;1,100;1,900&family=Solway:wght@400;700&display=swap');
 .container {
     width: 100%;
     margin: auto;
     padding: 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 .banner {
@@ -81,6 +78,7 @@ $blue-color: blue;
 .comment-session-button {
     width: 99%;
     display: flex;
+    gap: 5px;
     justify-content: flex-end;
 }
 
@@ -130,7 +128,7 @@ $blue-color: blue;
     }
 
     &-user-name {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     &-profile {
@@ -146,17 +144,17 @@ $blue-color: blue;
     }
 
     &-user {
-        width: 95%;
-        font-size: 11px;
+        width: 94%;
+        margin: auto;
         display: flex;
         text-align: left;
         flex-direction: column;
-        gap: 10px;
+        gap: 20px;
     }
 
     &-comment {
         color: $black-color;
-        font-size: 18px;
+        font-size: 22px;
         width: 90%;
         font-weight: 600;
     }
@@ -167,12 +165,16 @@ $blue-color: blue;
 
     &-replay {
         color: $black-color;
-        font-size: 16px;
+        font-size: 18px;
         cursor: pointer;
     }
 
     &-replay-session {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
     }
 }
 
@@ -183,7 +185,8 @@ $blue-color: blue;
 }
 
 .nested-replay-container {
-    width: 92%;
+    width: 95%;
+    margin: auto;
 
     &-items {
         width: 100%;
@@ -204,6 +207,6 @@ $blue-color: blue;
     }
 
     &-heading {
-        font-size: 17px;
+        font-size: 18px;
     }
 }
